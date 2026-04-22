@@ -3,6 +3,9 @@ import re
 from pathlib import Path
 from telethon import TelegramClient, functions, types, errors
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 api_id = int(os.environ["TG_API_ID"])
 api_hash = os.environ["TG_API_HASH"]
@@ -91,7 +94,8 @@ async def download_pack(client, query):
 
     for i, doc in enumerate(result.documents, start=1):
         ext = get_ext(doc)
-        filename = pack_dir / f"{i:03d}_{doc.id}{ext}"
+        # filename = pack_dir / f"{i:04d}{ext}"
+        filename = pack_dir / f"{i}{ext}"
         await client.download_media(doc, file=str(filename))
         print(f"Saved: {filename}")
 
